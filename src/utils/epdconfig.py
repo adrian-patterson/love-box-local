@@ -33,6 +33,9 @@ import sys
 import time
 
 logger = logging.getLogger(__name__)
+lib_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib")
+print("Lib Dir: ", lib_dir)
+sys.path.append(lib_dir)
 
 
 class RaspberryPi:
