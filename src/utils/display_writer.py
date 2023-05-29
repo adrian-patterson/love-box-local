@@ -1,5 +1,5 @@
 import textwrap
-from utils.epd7in5_V2 import EPD
+from epd7in5b import EPD
 from PIL import Image, ImageDraw, ImageFont
 
 
