@@ -21,8 +21,11 @@ router = APIRouter()
 display_writer = DisplayWriter()
 
 
-@router.post("", summary="Create a sample", response_description="The created sample")
+@router.post(
+    "/text",
+    summary="Send text to the LoveBox",
+    response_description="The request body",
+)
 async def create_sample(text_dto: TextDto):
-    print(text_dto.text)
-
+    display_writer.write_message_to_display_font_30(text_dto.text)
     return jsonable_encoder(text_dto)

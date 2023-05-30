@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routes.lovebox import router as LoveBoxRouter
+from utils.display_writer import DisplayWriter
 
 app = FastAPI(
     title="LoveBox API",
@@ -9,6 +10,12 @@ app = FastAPI(
 )
 
 app.include_router(LoveBoxRouter, tags=["LoveBox"], prefix="/lovebox")
+
+
+@app.on_event("startup")
+async def startup_event():
+    display_writer = DisplayWriter()
+    display_writer.clear_display()
 
 
 @app.get("/lovebox/healthz", tags=["Health"])
