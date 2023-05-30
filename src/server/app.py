@@ -12,12 +12,6 @@ app = FastAPI(
 app.include_router(LoveBoxRouter, tags=["LoveBox"], prefix="/lovebox")
 
 
-@app.on_event("startup")
-async def startup_event():
-    display_writer = DisplayWriter()
-    display_writer.clear_display()
-
-
 @app.get("/lovebox/healthz", tags=["Health"])
 async def health():
     return "Healthy"

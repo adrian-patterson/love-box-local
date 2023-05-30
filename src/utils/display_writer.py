@@ -9,6 +9,7 @@ class DisplayWriter:
         self.font_file = "Palatino.ttf"
         self.epd: EPD = EPD()
         self.epd.init()
+        self.clear_display()
 
     def write_message_to_display_font_30(self, message: str):
         display = Image.new("1", (self.epd.width, self.epd.height), 255)
@@ -24,7 +25,7 @@ class DisplayWriter:
             draw.text((10, y), line, font=font24, fill=0)
             y += 32
 
-        self.epd.display(self.epd.getbuffer(display))
+        self.epd.display_frame(self.epd.get_frame_buffer(display))
 
     def write_message_to_display_font_48(self, message: str):
         display = Image.new("1", (self.epd.width, self.epd.height), 255)
@@ -40,7 +41,7 @@ class DisplayWriter:
             draw.text((10, y), line, font=font48, fill=0)
             y += 53
 
-        self.epd.display(self.epd.getbuffer(display))
+        self.epd.display_frame(self.epd.get_frame_buffer(display))
 
     def write_message_to_display_font_64(self, message: str):
         display = Image.new("1", (self.epd.width, self.epd.height), 255)
@@ -56,7 +57,7 @@ class DisplayWriter:
             draw.text((10, y), line, font=font64, fill=0)
             y += 68
 
-        self.epd.display(self.epd.getbuffer(display))
+        self.epd.display_frame(self.epd.get_frame_buffer(display))
 
     def write_message_to_display_font_96(self, message: str):
         display = Image.new("1", (self.epd.width, self.epd.height), 255)
@@ -72,12 +73,8 @@ class DisplayWriter:
             draw.text((10, y), line, font=font64, fill=0)
             y += 100
 
-        self.epd.display(self.epd.getbuffer(display))
+        self.epd.display_frame(self.epd.get_frame_buffer(display))
 
     def clear_display(self):
-        buf = [0] * (int(self.epd.width / 8) * self.epd.height)
-        self.epd.send_command(0x10)
-        self.epd.send_data(buf)
-        self.epd.send_data(0x13)
-        self.epd.send_data(buf)
-        self.epd.send_data(0x12)
+        image = Image.new("L", (self.epd.width, self.epd.height), 255)
+        self.epd.display_frame(self.epd.get_frame_buffer(image))
