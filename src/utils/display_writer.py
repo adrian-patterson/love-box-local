@@ -1,3 +1,4 @@
+import os
 import textwrap
 import time
 from epd7in5b import EPD
@@ -12,6 +13,7 @@ class DisplayWriter:
         self.clear_display()
 
     def write_message_to_display_font_30(self, message: str):
+        print(f"CWD: {os.getcwd()}")
         display = Image.new("1", (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(display)
         font24 = ImageFont.truetype(self.font_file, 30)
