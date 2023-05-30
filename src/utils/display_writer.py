@@ -75,7 +75,7 @@ class DisplayWriter:
         self.epd.display(self.epd.getbuffer(display))
 
     def clear_display(self):
-        buf = [0x00] * (int(self.width / 8) * self.height)
+        buf = [0x00] * (int(self.epd.width / 8) * self.epd.height)
         self.epd.send_command(0x10)
         self.epd.send_data(buf)
         self.epd.send_data(0x13)
