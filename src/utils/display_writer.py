@@ -1,4 +1,5 @@
 import textwrap
+import time
 from epd7in5b import EPD
 from PIL import Image, ImageDraw, ImageFont
 
@@ -6,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 class DisplayWriter:
     def __init__(self):
         self.font_file = "Palatino.ttf"
-        self.epd = EPD()
+        self.epd: EPD = EPD()
         self.epd.init()
 
     def write_message_to_display_font_30(self, message: str):
@@ -74,8 +75,9 @@ class DisplayWriter:
         self.epd.display(self.epd.getbuffer(display))
 
     def clear_display(self):
-        self.epd.Clear()
-
-        # image_name = message_repository.get_message_string()
-        # image = Image.open(os.path.join(pic_dir, image_name))
-        # self.epd.display(self.epd.getbuffer(image))
+        buf = [0x00] * (int(self.width / 8) * self.height)
+        self.epd.send_command(0x10)
+        self.epd.send_data(buf)
+        self.epd.send_data(0x13)
+        self.epd.send_data(buf)
+        self.epd.send_data(0x12)
