@@ -7,7 +7,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 class DisplayWriter:
     def __init__(self):
-        self.font_file = "/fonts/Palatino.ttf"
+        self.font_file = font_file = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "fonts", "Palatino.ttf"
+        )
         self.epd: EPD = EPD()
         self.epd.init()
         self.clear_display()
